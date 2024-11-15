@@ -31,7 +31,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Project name
-project(Robotics_Corner_OpenCV)
+project(FaceDetection)
 
 # Set C++ standard (if necessary)
 set(CMAKE_CXX_STANDARD 17)
@@ -52,11 +52,13 @@ endif()
 # Include OpenCV headers
 include_directories(
     ${OpenCV_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}/object_detector/   # Adjusted to include "include" directory
+    ${CMAKE_SOURCE_DIR}/FaceDetector/   # Adjusted to include "include" directory
+    ${CMAKE_SOURCE_DIR}/FeatureExecutor/
     )
-
+    
 set(PROJECT_SOURCES
-    ${CMAKE_SOURCE_DIR}/object_detector/object_detector.cpp
+    ${CMAKE_SOURCE_DIR}/FeatureExecutor/FeatureExecutor.cpp
+    ${CMAKE_SOURCE_DIR}/FaceDetector/FaceDetector.cpp
     ${CMAKE_SOURCE_DIR}/main.cpp
     # Add more source files here as needed
 )

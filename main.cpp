@@ -1,42 +1,45 @@
-#include "object_detector.hpp"
-#include <opencv2/opencv.hpp>
+#include "FeatureExecutor.hpp"
 #include <iostream>
-#include <filesystem> // C++17 feature
 
-int main(int argc, char** argv) 
+// c+17  and above
+#include <filesystem>
+
+
+int main() 
 {
-    // Define the relative path to the Haar cascade file
-    std::string cascadeFile = "/home/abdelrahman-elgharabawy/Documents/Projects/Robotics_Corner_OpenCV/data/haarcascade_frontalface_default.xml";
+    // Create an instance of the FeatureExecutor class. This class likely contains methods
+    // to execute various feature detection or processing tasks.    
+    FeatureExecutor executor;
 
-    // Check if the file exists
-    if (!std::filesystem::exists(cascadeFile)) {
-        std::cerr << "Error: Cascade file not found at: " << cascadeFile << std::endl;
-        std::cerr << "Please ensure the file is in the correct directory." << std::endl;
-        return -1;
+    // Specify the path to the Haar cascade XML file used for face detection.  
+    // Haar cascades are a machine learning approach for object detection. 
+    // The XML file contains the trained classifier data.
+    std::filesystem::path executablePath = std::filesystem::current_path();
+    std::filesystem::path dataDirectory = executablePath / "../data"; // If data is one level up
+    std::filesystem::path cascadeFile = dataDirectory / "haarcascade_frontalface_default.xml";
+    std::string cascadePath = cascadeFile.string();
+
+
+    // Use a try-catch block to handle potential exceptions during face detection.  This is
+    // good practice, as operations like loading the cascade file or accessing the webcam
+    // can throw exceptions.
+    try {
+        // Call the executeFaceDetection method of the FeatureExecutor instance, passing
+        // the cascade file path as an argument. This method will likely initialize a
+        // FaceDetector object, open the default webcam, capture frames, detect faces in
+        // the frames, draw bounding boxes around the detected faces, and display the
+        // results in a window.
+        executor.executeFaceDetection(cascadePath);
+    } catch (const std::exception& e) {
+
+        // If any exception derived from std::exception is caught, print an error message
+        // to the standard error stream (cerr) including the exception's what() message.
+        // This provides information about the error that occurred.
+        std::cerr << "Exception occurred: " << e.what() << std::endl;
+        // Return EXIT_FAILURE to indicate that the program terminated due to an error.
+        return EXIT_FAILURE;
     }
 
-    // Initialize the ObjectDetector
-    ObjectDetector detector(cascadeFile);
-
-    // Use default camera
-    cv::VideoCapture cap(0); 
-    if (!cap.isOpened()) 
-    {
-        std::cerr << "Error opening video stream." << std::endl;
-        return -1;
-    }
-
-    cv::Mat frame;
-    while (cap.read(frame)) 
-    {
-        detector.detectAndDisplay(frame);
-
-        // Show the frame (optional)
-        cv::imshow("Video Feed", frame);
-
-        // Press 'q' to exit
-        if (cv::waitKey(30) == 'q') break; 
-    }
-
-    return 0;
+    // If no exceptions occurred, return EXIT_SUCCESS to indicate successful execution.
+    return EXIT_SUCCESS;
 }
