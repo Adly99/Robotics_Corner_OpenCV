@@ -1,3 +1,0 @@
-/home/abdelrahman-elgharabawy/Documents/Projects/Robotics_Corner_OpenCV/build/CMakeFiles/FaceDetection.dir
-/home/abdelrahman-elgharabawy/Documents/Projects/Robotics_Corner_OpenCV/build/CMakeFiles/edit_cache.dir
-/home/abdelrahman-elgharabawy/Documents/Projects/Robotics_Corner_OpenCV/build/CMakeFiles/rebuild_cache.dir
